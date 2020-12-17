@@ -185,7 +185,7 @@ object FrCadastro: TFrCadastro
   end
   object DS_Dados: TDataSource
     Left = 152
-    Top = 72
+    Top = 104
   end
   object ImageList1: TImageList
     Left = 240
