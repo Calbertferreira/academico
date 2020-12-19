@@ -6,7 +6,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Buttons, Vcl.ExtCtrls,
   System.ImageList, Vcl.ImgList, Vcl.DBActns, System.Actions, Vcl.ActnList,
-  Data.DB;
+  Data.DB, Vcl.DBCtrls;
 
 type
   TFrCadastro = class(TForm)
@@ -25,6 +25,7 @@ type
     ImageList1: TImageList;
     SpeedButton5: TSpeedButton;
     SpeedButton6: TSpeedButton;
+    procedure SpeedButton6Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -37,5 +38,10 @@ var
 implementation
 
 {$R *.dfm}
+
+procedure TFrCadastro.SpeedButton6Click(Sender: TObject);
+begin
+  close;
+end;
 
 end.
