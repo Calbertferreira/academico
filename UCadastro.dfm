@@ -3,7 +3,7 @@ object FrCadastro: TFrCadastro
   Top = 0
   Caption = 'Cadastro'
   ClientHeight = 396
-  ClientWidth = 447
+  ClientWidth = 619
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -11,79 +11,81 @@ object FrCadastro: TFrCadastro
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  Position = poScreenCenter
   PixelsPerInch = 96
   TextHeight = 13
   object Panel1: TPanel
     Left = 0
     Top = 360
-    Width = 447
+    Width = 619
     Height = 36
     Align = alBottom
     TabOrder = 0
     object SpeedButton1: TSpeedButton
-      Left = 41
+      Left = 81
       Top = 1
-      Width = 23
+      Width = 40
       Height = 34
+      Hint = 'Alterar'
       Action = DatasetEdit1
       Align = alLeft
       ParentShowHint = False
       ShowHint = True
-      ExplicitLeft = 18
-      ExplicitHeight = 28
+      ExplicitLeft = 41
     end
     object SpeedButton2: TSpeedButton
       Left = 1
       Top = 1
       Width = 40
       Height = 34
+      Hint = 'Inserir'
       Action = DatasetInsert1
       Align = alLeft
       ParentShowHint = False
       ShowHint = True
     end
     object SpeedButton3: TSpeedButton
-      Left = 64
+      Left = 161
       Top = 1
-      Width = 23
+      Width = 40
       Height = 34
+      Hint = 'Cancelar'
       Action = DatasetCancel1
       Align = alLeft
       ParentShowHint = False
       ShowHint = True
-      ExplicitLeft = 47
-      ExplicitHeight = 28
+      ExplicitLeft = 81
     end
     object SpeedButton4: TSpeedButton
-      Left = 110
+      Left = 41
       Top = 1
-      Width = 23
+      Width = 40
       Height = 34
+      Hint = 'Apagar'
       Action = DatasetDelete1
       Align = alLeft
       ParentShowHint = False
       ShowHint = True
-      ExplicitLeft = 99
-      ExplicitHeight = 28
+      ExplicitLeft = 17
     end
     object SpeedButton5: TSpeedButton
-      Left = 87
+      Left = 121
       Top = 1
-      Width = 23
+      Width = 40
       Height = 34
+      Hint = 'Gravar'
       Action = DatasetPost1
       Align = alLeft
       ParentShowHint = False
       ShowHint = True
-      ExplicitLeft = 64
-      ExplicitHeight = 28
+      ExplicitLeft = 105
     end
     object SpeedButton6: TSpeedButton
-      Left = 360
+      Left = 532
       Top = 1
       Width = 86
       Height = 34
-      Action = DatasetDelete1
+      Hint = 'Delete'
       Align = alRight
       Glyph.Data = {
         F6060000424DF606000000000000360000002800000018000000180000000100
@@ -144,6 +146,7 @@ object FrCadastro: TFrCadastro
         F2F8FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
       ParentShowHint = False
       ShowHint = True
+      OnClick = SpeedButton6Click
       ExplicitLeft = 361
       ExplicitHeight = 28
     end
@@ -191,7 +194,7 @@ object FrCadastro: TFrCadastro
     Left = 240
     Top = 40
     Bitmap = {
-      494C0101050018003C0010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010105001800440010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000002000000001002000000000000020
       0000000000000000000000000000000000000000000000000000000000000000
       000000000000EFB07500F0B67900EFB57A00EFB57800EFAF7200EFB57A000000
