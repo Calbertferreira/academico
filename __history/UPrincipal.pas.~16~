@@ -1,0 +1,84 @@
+unit UPrincipal;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  System.IniFiles,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.StdCtrls, Vcl.Buttons,
+  Vcl.Imaging.pngimage;
+
+type
+  TFrPrincipal = class(TForm)
+    Panel1: TPanel;
+    FlowPanel1: TFlowPanel;
+    Panel2: TPanel;
+    Panel3: TPanel;
+    Panel4: TPanel;
+    Panel5: TPanel;
+    BitBtn1: TBitBtn;
+    BitBtn2: TBitBtn;
+    BitBtn3: TBitBtn;
+    Image1: TImage;
+    BitBtn4: TBitBtn;
+    BitBtn5: TBitBtn;
+    BitBtn6: TBitBtn;
+    Image2: TImage;
+    procedure BitBtn3Click(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+  private
+    { Private declarations }
+    ArquivoINI : TIniFile;
+  public
+    { Public declarations }
+  end;
+
+var
+  FrPrincipal: TFrPrincipal;
+
+implementation
+
+ uses
+   dm_academico,UCadDisciplinas;
+
+{$R *.dfm}
+
+
+procedure TFrPrincipal.BitBtn3Click(Sender: TObject);
+begin
+  FrCadDisciplinas := TFrCadDisciplinas.Create(Application);
+  FrCadDisciplinas.ShowModal;
+  FrCadDisciplinas.free;
+
+end;
+
+procedure TFrPrincipal.FormCreate(Sender: TObject);
+begin
+  dmacademico.FDConnection_academico.Connected := false;
+  if not (FileExists(ExtractFilePath( Application.ExeName )+ 'Config.ini')) then
+  begin
+    MessageDlg('Arquivo de Configuração não encontrado em: '+#13+ExtractFilePath( Application.ExeName ), mtInformation, [mbOK], 0);
+    application.Terminate;
+  end
+  else
+  begin
+    try
+      ArquivoINI := TIniFile.create(ExtractFilePath( Application.ExeName )+ 'Config.ini');
+      //[0]User_Name=sysdba
+      //[1]Password=masterkey
+      //[2]Database=C:\Projetos_carlos\academico\academico.git\ACADEMICO.FDB
+      //[3]DriverID=FB
+      dmacademico.FDConnection_academico.Params[0] := 'User_Name='+ArquivoINI.ReadString('Configuracoes','User_Name','');
+      dmacademico.FDConnection_academico.Params[1] := 'Password='+ArquivoINI.ReadString('Configuracoes','Password','');
+      dmacademico.FDConnection_academico.Params[2] := 'Database='+ArquivoINI.ReadString('Configuracoes','Database','');
+      dmacademico.FDConnection_academico.Connected := true;
+    finally
+      MessageDlg('Problemas ao Conectar ao Banco de Dados', mtInformation, [mbOK], 0);
+      Application.Terminate;
+    end;
+
+  end;
+
+end;
+
+end.

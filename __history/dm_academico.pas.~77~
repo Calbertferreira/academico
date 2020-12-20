@@ -1,0 +1,323 @@
+unit dm_academico;
+
+interface
+
+uses
+  System.SysUtils, System.Classes, FireDAC.Stan.Intf, FireDAC.Stan.Option,
+  FireDAC.Stan.Error, FireDAC.UI.Intf, FireDAC.Phys.Intf, FireDAC.Stan.Def,
+  FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys, FireDAC.Phys.FB,
+  FireDAC.Phys.FBDef, FireDAC.VCLUI.Wait, FireDAC.Stan.Param, FireDAC.DatS,
+  FireDAC.DApt.Intf, FireDAC.DApt, FireDAC.Comp.Client, Data.DB,
+  FireDAC.Comp.DataSet, Vcl.Dialogs;
+
+type
+  TDMAcademico = class(TDataModule)
+    FDConnection_academico: TFDConnection;
+    FDTab_Disciplinas: TFDTable;
+    FDQry_Professores: TFDQuery;
+    FDUp_Professores: TFDUpdateSQL;
+    FDTab_DisciplinasCOD: TIntegerField;
+    FDTab_DisciplinasDESCRICAO: TStringField;
+    FDQry_execute: TFDQuery;
+    FDTab_Contadores: TFDTable;
+    FDTab_ContadoresCOD: TIntegerField;
+    FDTab_ContadoresTABELA_NOME: TStringField;
+    FDTab_ContadoresCONTADOR: TIntegerField;
+    FDQry_ProfessoresCOD: TIntegerField;
+    FDQry_ProfessoresNOME: TStringField;
+    FDQry_ProfessoresCPF: TStringField;
+    FDQry_ProfessoresENDERECO: TStringField;
+    FDQry_ProfessoresNUMERO: TStringField;
+    FDQry_ProfessoresCOMPLEMENTO: TStringField;
+    FDQry_ProfessoresBAIRRO: TStringField;
+    FDQry_ProfessoresCIDADE: TStringField;
+    FDQry_ProfessoresCEP: TStringField;
+    FDQry_ProfessoresCOD_DISCIPLINA: TIntegerField;
+    FDQry_ProfessoresUF: TStringField;
+    FDQry_List_Disciplinas: TFDQuery;
+    FDQry_List_DisciplinasCOD: TIntegerField;
+    FDQry_List_DisciplinasDESCRICAO: TStringField;
+    FDQry_ProfessoresLook_Disciplina: TStringField;
+    FDQry_Alunos: TFDQuery;
+    FDUp_Alunos: TFDUpdateSQL;
+    FDQry_AlunosCOD: TIntegerField;
+    FDQry_AlunosNOME: TStringField;
+    FDQry_AlunosCPF: TStringField;
+    FDQry_AlunosENDERECO: TStringField;
+    FDQry_AlunosNUMERO: TStringField;
+    FDQry_AlunosCOMPLEMENTO: TStringField;
+    FDQry_AlunosBAIRRO: TStringField;
+    FDQry_AlunosCIDADE: TStringField;
+    FDQry_AlunosCEP: TStringField;
+    FDQry_AlunosUF: TStringField;
+    DS_Alunos: TDataSource;
+    FDQry_aluno_Disciplina: TFDQuery;
+    FDUp_Aluno_disciplina: TFDUpdateSQL;
+    FDQry_aluno_DisciplinaLOOK_DISCIPLINAS: TStringField;
+    FDQry_aluno_DisciplinaCHAVE: TIntegerField;
+    FDQry_aluno_DisciplinaCOD_ALUNO: TIntegerField;
+    FDQry_aluno_DisciplinaCOD_DISCIPLINA: TIntegerField;
+    FDQry_aluno_DisciplinaNOTA_PER1: TFloatField;
+    FDQry_aluno_DisciplinaNOTA_PER2: TFloatField;
+    FDQry_aluno_DisciplinaNOTA_TRABALHO: TFloatField;
+    FDQry_aluno_DisciplinaMEDIA: TFloatField;
+    FDQry_aluno_DisciplinaRESULTADO: TStringField;
+    FDQry_aluno_DisciplinaLOOKDISCIPLINA: TStringField;
+    procedure FDTab_DisciplinasBeforePost(DataSet: TDataSet);
+    procedure FDTab_DisciplinasAfterInsert(DataSet: TDataSet);
+    procedure FDQry_ProfessoresAfterDelete(DataSet: TDataSet);
+    procedure FDQry_ProfessoresAfterPost(DataSet: TDataSet);
+    procedure FDQry_ProfessoresBeforeDelete(DataSet: TDataSet);
+    procedure FDQry_ProfessoresBeforePost(DataSet: TDataSet);
+    procedure FDQry_ProfessoresAfterInsert(DataSet: TDataSet);
+    procedure FDQry_AlunosAfterInsert(DataSet: TDataSet);
+    procedure FDQry_AlunosAfterDelete(DataSet: TDataSet);
+    procedure FDQry_AlunosAfterPost(DataSet: TDataSet);
+    procedure FDQry_AlunosBeforeDelete(DataSet: TDataSet);
+    procedure FDQry_AlunosBeforePost(DataSet: TDataSet);
+    procedure FDQry_aluno_DisciplinaBeforePost(DataSet: TDataSet);
+    procedure FDQry_aluno_DisciplinaAfterPost(DataSet: TDataSet);
+    procedure FDQry_aluno_DisciplinaAfterDelete(DataSet: TDataSet);
+    function get_Contador(tabela_nome:string):integer;
+    function Retorna_Resultado(NOTA1,NOTA2,NOTA3:Real):Real;
+    function RoundCurrency(const Value: Currency): Currency;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  DMAcademico: TDMAcademico;
+
+implementation
+
+{%CLASSGROUP 'Vcl.Controls.TControl'}
+
+{$R *.dfm}
+
+function TDMAcademico.RoundCurrency(const Value: Currency): Currency;
+var
+  V64: Int64 absolute Result;
+  Decimals: Integer;
+begin
+  Result := Value;
+  Decimals := V64 mod 100;
+  Dec(V64, Decimals);
+  case Decimals of
+    -99 .. -50 : Dec(V64, 100);
+    50 .. 99 : Inc(V64, 100);
+  end;
+end;
+
+function TDMAcademico.Retorna_Resultado(NOTA1,NOTA2,NOTA3:Real):Real;
+begin
+  if (NOTA1>0)or(NOTA2>0)or(NOTA3>0) then
+     result := RoundCurrency((NOTA1+NOTA2+NOTA3)/3)
+  else
+     result := 0;
+end;
+
+function TDMAcademico.get_Contador(tabela_nome:string):integer;
+  var
+   Atribuir_valor : boolean;
+   Contador : integer;
+  procedure abrir_tabela;
+  begin
+    FDTab_Contadores.close;
+    FDTab_Contadores.open;
+    if FDTab_Contadores.Locate('TABELA_NOME',tabela_nome,[]) then
+       Atribuir_valor := true;
+  end;
+  procedure Atualiza_contador;
+  begin
+    FDTab_Contadores.close;
+    FDTab_Contadores.open;
+    if FDTab_Contadores.Locate('TABELA_NOME',tabela_nome,[]) then
+    begin
+      FDTab_Contadores.edit;
+      FDTab_ContadoresCONTADOR.AsInteger := FDTab_ContadoresCONTADOR.AsInteger + 1;
+      FDTab_Contadores.post;
+    end;
+  end;
+
+begin
+  try
+    Atribuir_valor := false;
+    result := 0;
+    abrir_tabela;
+    if Atribuir_valor then
+    begin
+      result := FDTab_ContadoresCONTADOR.AsInteger;
+      Atualiza_contador;
+    end
+    else
+    begin
+      FDQry_execute.Close;
+      FDQry_execute.SQL.Text:='select coalesce(max(cod),0) contador from CONTADORES';
+      FDQry_execute.open;
+      contador := FDQry_execute.fieldbyname('contador').asinteger + 1;
+      FDTab_Contadores.append;
+      FDTab_Contadorestabela_nome.asstring := tabela_nome;
+      FDTab_ContadoresCONTADOR.asinteger := 1;
+      FDTab_Contadorescod.asinteger := contador;
+      FDTab_Contadores.Post;
+      result := 0;
+    end;
+
+  except
+    result := 0;
+  end;
+
+end;
+
+procedure TDMAcademico.FDQry_AlunosAfterDelete(DataSet: TDataSet);
+begin
+  FDQry_Alunos.ApplyUpdates();
+  FDQry_Alunos.CommitUpdates;
+
+end;
+
+procedure TDMAcademico.FDQry_AlunosAfterInsert(DataSet: TDataSet);
+begin
+  FDQry_AlunosCOD.AsInteger := 0;
+end;
+
+procedure TDMAcademico.FDQry_AlunosAfterPost(DataSet: TDataSet);
+begin
+  FDQry_Alunos.ApplyUpdates();
+  FDQry_Alunos.CommitUpdates;
+
+end;
+
+procedure TDMAcademico.FDQry_AlunosBeforeDelete(DataSet: TDataSet);
+begin
+  FDQry_Alunos.ApplyUpdates();
+  FDQry_Alunos.CommitUpdates;
+
+end;
+
+procedure TDMAcademico.FDQry_AlunosBeforePost(DataSet: TDataSet);
+  var
+    contador : integer;
+begin
+  if FDQry_Alunos.State = dsInsert then
+  begin
+    contador := get_Contador('Alunos');
+    if contador <> - 1  then
+       FDQry_AlunosCOD.AsInteger := contador + 1
+    else
+    begin
+      MessageDlg('Erro ao inserir registro', mtWarning, [mbOK], 0);
+      abort;
+    end;
+  end;
+
+end;
+
+procedure TDMAcademico.FDQry_aluno_DisciplinaAfterDelete(DataSet: TDataSet);
+begin
+  FDQry_aluno_Disciplina.ApplyUpdates();
+  FDQry_aluno_Disciplina.CommitUpdates;
+
+end;
+
+procedure TDMAcademico.FDQry_aluno_DisciplinaAfterPost(DataSet: TDataSet);
+begin
+  FDQry_aluno_Disciplina.ApplyUpdates();
+  FDQry_aluno_Disciplina.CommitUpdates;
+  FDQry_aluno_Disciplina.Refresh;
+
+end;
+
+procedure TDMAcademico.FDQry_aluno_DisciplinaBeforePost(DataSet: TDataSet);
+  var
+    contador : integer;
+begin
+  if FDQry_aluno_Disciplina.State = dsInsert then
+  begin
+    contador := get_Contador('DISCIPLINA_ALUNO');
+    if contador <> - 1  then
+       FDQry_aluno_Disciplina.fieldbyname('chave').AsInteger := contador + 1
+    else
+    begin
+      MessageDlg('Erro ao inserir registro', mtWarning, [mbOK], 0);
+      abort;
+    end;
+  end;
+
+  FDQry_aluno_Disciplina.fieldbyname('MEDIA').asfloat := Retorna_Resultado
+                    (FDQry_aluno_Disciplina.fieldbyname('NOTA_PER1').asfloat,
+                     FDQry_aluno_Disciplina.fieldbyname('NOTA_PER2').asfloat,
+                     FDQry_aluno_Disciplina.fieldbyname('NOTA_TRABALHO').asfloat);
+
+end;
+
+procedure TDMAcademico.FDQry_ProfessoresAfterDelete(DataSet: TDataSet);
+begin
+  FDQry_Professores.ApplyUpdates();
+  FDQry_Professores.CommitUpdates;
+end;
+
+procedure TDMAcademico.FDQry_ProfessoresAfterInsert(DataSet: TDataSet);
+begin
+  FDQry_ProfessoresCOD.AsInteger := 0;
+end;
+
+procedure TDMAcademico.FDQry_ProfessoresAfterPost(DataSet: TDataSet);
+begin
+  FDQry_Professores.ApplyUpdates();
+  FDQry_Professores.CommitUpdates;
+
+end;
+
+procedure TDMAcademico.FDQry_ProfessoresBeforeDelete(DataSet: TDataSet);
+begin
+  //if not (MessageDlg('Confirma Exclusão', mtConfirmation, [mbYes, mbNo], 0) = mrNo) then
+  //   abort;
+end;
+
+procedure TDMAcademico.FDQry_ProfessoresBeforePost(DataSet: TDataSet);
+  var
+    contador : integer;
+begin
+  if FDQry_Professores.State = dsInsert then
+  begin
+    contador := get_Contador('Professores');
+    if contador <> - 1  then
+       FDQry_ProfessoresCOD.AsInteger := contador + 1
+    else
+    begin
+      MessageDlg('Erro ao inserir registro', mtWarning, [mbOK], 0);
+      abort;
+    end;
+  end;
+
+end;
+
+procedure TDMAcademico.FDTab_DisciplinasAfterInsert(DataSet: TDataSet);
+begin
+ FDTab_DisciplinasCOD.AsInteger := 0;
+end;
+
+procedure TDMAcademico.FDTab_DisciplinasBeforePost(DataSet: TDataSet);
+  var
+    contador : integer;
+begin
+  if FDTab_Disciplinas.State = dsInsert then
+  begin
+    contador := get_Contador(FDTab_Disciplinas.TableName);
+    if contador <> - 1  then
+       FDTab_DisciplinasCOD.AsInteger := contador + 1
+    else
+    begin
+      MessageDlg('Erro ao inserir registro', mtWarning, [mbOK], 0);
+      abort;
+    end;
+  end;
+
+
+
+end;
+
+end.

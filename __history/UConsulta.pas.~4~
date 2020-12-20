@@ -1,0 +1,56 @@
+unit UConsulta;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Buttons, Vcl.ExtCtrls, Data.DB, FireDAC.Stan.Intf,
+  FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf,
+  FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, FireDAC.Comp.DataSet, FireDAC.Comp.Client,
+  Vcl.Grids, Vcl.DBGrids, Vcl.StdCtrls;
+
+type
+  TFrConsulta = class(TForm)
+    Panel1: TPanel;
+    Panel2: TPanel;
+    SpeedButton6: TSpeedButton;
+    Edit1: TEdit;
+    Edit2: TEdit;
+    Label1: TLabel;
+    Label2: TLabel;
+    DBGrid1: TDBGrid;
+    DS_Dados: TDataSource;
+    FDQry_Consulta: TFDQuery;
+    FDQry_ConsultaCOD: TIntegerField;
+    FDQry_ConsultaDESCRICAO: TStringField;
+    procedure FormShow(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  FrConsulta: TFrConsulta;
+
+implementation
+
+{$R *.dfm}
+
+procedure TFrConsulta.FormShow(Sender: TObject);
+  procedure Abrir_Consulta(tabela_nome);
+  begin
+    FDQry_Consulta.Close;
+    FDQry_Consulta.SQL.text := 'SELECT cod, nome from order by nome'+ tabela_nome;
+    FDQry_Consulta.Close;
+  end;
+begin
+  if tag = 0 then
+     Abrir_Consulta('professores')
+  else
+  if tag = 1 then
+     Abrir_Consulta('alunos')
+
+end;
+
+end.

@@ -1,0 +1,68 @@
+unit UPrincipal;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  System.IniFiles,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.StdCtrls, Vcl.Buttons,
+  Vcl.Imaging.pngimage;
+
+type
+  TFrPrincipal = class(TForm)
+    Panel1: TPanel;
+    FlowPanel1: TFlowPanel;
+    Panel2: TPanel;
+    Panel3: TPanel;
+    Panel4: TPanel;
+    Panel5: TPanel;
+    BitBtn1: TBitBtn;
+    BitBtn2: TBitBtn;
+    BitBtn3: TBitBtn;
+    Image1: TImage;
+    BitBtn4: TBitBtn;
+    BitBtn5: TBitBtn;
+    BitBtn6: TBitBtn;
+    Image2: TImage;
+    procedure BitBtn3Click(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+    ArquiviINI:TIniFile;
+  end;
+
+var
+  FrPrincipal: TFrPrincipal;
+
+implementation
+
+ uses
+   dm_academico,UCadDsiciplinas;
+
+{$R *.dfm}
+
+
+procedure TFrPrincipal.BitBtn3Click(Sender: TObject);
+begin
+  FrCadDisciplinas := TFrCadDisciplinas.Create(Application);
+  FrCadDisciplinas.ShowModal;
+  FrCadDisciplinas.free;
+
+end;
+
+procedure TFrPrincipal.FormCreate(Sender: TObject);
+  var
+   newpath: String;
+begin
+{
+  DMAcademico.FDConnection_academico.connected := false;
+  newpath := ExtractFilePath( Application.ExeName );
+  if file newpath then
+
+  DMAcademico.FDConnection_academico.connected := true;
+  }
+end;
+
+end.

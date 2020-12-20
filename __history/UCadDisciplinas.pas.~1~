@@ -1,0 +1,30 @@
+unit UCadDisciplinas;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, UCadastro, System.ImageList,
+  Vcl.ImgList, Data.DB, Vcl.DBActns, System.Actions, Vcl.ActnList, Vcl.Buttons,
+  Vcl.ExtCtrls, Vcl.Grids, Vcl.DBGrids;
+
+type
+  TFrCadDisciplinas = class(TFrCadastro)
+    DBGrid1: TDBGrid;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  FrCadDisciplinas: TFrCadDisciplinas;
+
+implementation
+
+uses
+  dm_academico;
+
+{$R *.dfm}
+
+end.

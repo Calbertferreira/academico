@@ -1,0 +1,24 @@
+program Academico;
+
+uses
+  Vcl.Forms,
+  UPrincipal in 'UPrincipal.pas' {FrPrincipal},
+  dm_academico in 'dm_academico.pas' {DMAcademico: TDataModule},
+  UCadDisciplinas in 'UCadDisciplinas.pas' {FrCadDisciplinas},
+  UCadProfessores in 'UCadProfessores.pas' {FrCadProfessores},
+  UConsulta in 'UConsulta.pas' {FrConsulta},
+  UCadAlunos in 'UCadAlunos.pas' {FrCadAlunos},
+  ULancamentoNotas in 'ULancamentoNotas.pas' {FrLancamentoNotas},
+  uFultroRel in 'uFultroRel.pas' {FultroRel},
+  URelList_Disciplinas_Alunos in 'URelList_Disciplinas_Alunos.pas' {FrList_Aluno_Disciplinas1};
+
+{$R *.res}
+
+begin
+  Application.Initialize;
+  Application.MainFormOnTaskbar := True;
+  Application.CreateForm(TDMAcademico, DMAcademico);
+  Application.CreateForm(TFrPrincipal, FrPrincipal);
+  Application.CreateForm(TFrList_Aluno_Disciplinas1, FrList_Aluno_Disciplinas1);
+  Application.Run;
+end.
