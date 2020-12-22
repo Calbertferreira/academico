@@ -3,7 +3,7 @@ object FrLancamentoNotas: TFrLancamentoNotas
   Top = 0
   Caption = 'Lan'#231'amento de Notas'
   ClientHeight = 398
-  ClientWidth = 902
+  ClientWidth = 957
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -16,13 +16,13 @@ object FrLancamentoNotas: TFrLancamentoNotas
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 902
+    Width = 957
     Height = 37
     Align = alTop
     BevelInner = bvLowered
     Caption = 'Lan'#231'amento de Notas'
     TabOrder = 0
-    ExplicitWidth = 674
+    ExplicitTop = -2
   end
   object Panel2: TPanel
     Left = 0
@@ -41,7 +41,6 @@ object FrLancamentoNotas: TFrLancamentoNotas
       BevelInner = bvLowered
       Caption = 'Disciplinas'
       TabOrder = 0
-      ExplicitWidth = 133
     end
     object DBGrid2: TDBGrid
       Left = 2
@@ -75,22 +74,21 @@ object FrLancamentoNotas: TFrLancamentoNotas
   object Panel4: TPanel
     Left = 265
     Top = 37
-    Width = 637
+    Width = 692
     Height = 361
     Align = alClient
     BevelInner = bvLowered
     TabOrder = 2
-    ExplicitLeft = 273
-    ExplicitWidth = 782
+    ExplicitWidth = 637
     object Panel5: TPanel
       Left = 2
       Top = 2
-      Width = 633
+      Width = 688
       Height = 44
       Align = alTop
       BevelInner = bvLowered
       TabOrder = 0
-      ExplicitWidth = 532
+      ExplicitWidth = 633
       object Label2: TLabel
         Left = 15
         Top = 23
@@ -101,7 +99,7 @@ object FrLancamentoNotas: TFrLancamentoNotas
       object Label1: TLabel
         Left = 2
         Top = 2
-        Width = 629
+        Width = 684
         Height = 13
         Align = alTop
         Alignment = taCenter
@@ -122,11 +120,11 @@ object FrLancamentoNotas: TFrLancamentoNotas
     object Panel6: TPanel
       Left = 2
       Top = 324
-      Width = 633
+      Width = 688
       Height = 35
       Align = alBottom
       TabOrder = 1
-      ExplicitLeft = 4
+      ExplicitWidth = 633
       object SpeedButton6: TSpeedButton
         Left = 522
         Top = 4
@@ -202,15 +200,14 @@ object FrLancamentoNotas: TFrLancamentoNotas
         VisibleButtons = [nbDelete, nbEdit, nbPost, nbCancel]
         Align = alLeft
         TabOrder = 0
-        ExplicitLeft = 2
-        ExplicitTop = 6
       end
     end
     object DBGrid1: TDBGrid
-      Left = 48
-      Top = 64
-      Width = 320
-      Height = 120
+      Left = 2
+      Top = 46
+      Width = 688
+      Height = 278
+      Align = alClient
       DataSource = DS_Alunos
       TabOrder = 2
       TitleFont.Charset = DEFAULT_CHARSET
@@ -218,15 +215,47 @@ object FrLancamentoNotas: TFrLancamentoNotas
       TitleFont.Height = -11
       TitleFont.Name = 'Tahoma'
       TitleFont.Style = []
-    end
-    object DBEdit1: TDBEdit
-      Left = 48
-      Top = 240
-      Width = 121
-      Height = 21
-      DataField = 'NOTA_PER1'
-      DataSource = DS_Alunos
-      TabOrder = 3
+      Columns = <
+        item
+          Expanded = False
+          FieldName = 'COD'
+          Visible = True
+        end
+        item
+          Alignment = taRightJustify
+          Expanded = False
+          FieldName = 'NOME'
+          Width = 100
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'NOTA_PER1'
+          Width = 100
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'NOTA_PER2'
+          Width = 100
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'NOTA_TRABALHO'
+          Width = 100
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'MEDIA'
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'RESULTADO'
+          Visible = True
+        end>
     end
   end
   object FDQry_Disciplina: TFDQuery
@@ -239,23 +268,26 @@ object FrLancamentoNotas: TFrLancamentoNotas
       'order by   DESCRICAO'
       ''
       '')
-    Left = 40
-    Top = 8
+    Left = 80
+    Top = 16
     object FDQry_DisciplinaCOD: TIntegerField
       FieldName = 'COD'
       Origin = 'COD'
       ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
+      ReadOnly = True
       Required = True
     end
     object FDQry_DisciplinaDESCRICAO: TStringField
       FieldName = 'DESCRICAO'
       Origin = 'DESCRICAO'
+      ReadOnly = True
       Size = 50
     end
   end
   object DS_Disciplinas: TDataSource
     DataSet = FDQry_Disciplina
-    Left = 104
+    Left = 152
+    Top = 72
   end
   object FDQry_Alunos: TFDQuery
     AfterPost = FDQry_AlunosAfterPost
@@ -337,21 +369,18 @@ object FrLancamentoNotas: TFrLancamentoNotas
       FieldName = 'NOTA_PER1'
       Origin = 'NOTA_PER1'
       ProviderFlags = []
-      ReadOnly = True
     end
     object FDQry_AlunosNOTA_PER2: TFloatField
       AutoGenerateValue = arDefault
       FieldName = 'NOTA_PER2'
       Origin = 'NOTA_PER2'
       ProviderFlags = []
-      ReadOnly = True
     end
     object FDQry_AlunosNOTA_TRABALHO: TFloatField
       AutoGenerateValue = arDefault
       FieldName = 'NOTA_TRABALHO'
       Origin = 'NOTA_TRABALHO'
       ProviderFlags = []
-      ReadOnly = True
     end
     object FDQry_AlunosMEDIA: TFloatField
       AutoGenerateValue = arDefault

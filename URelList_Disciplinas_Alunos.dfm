@@ -97,7 +97,7 @@ object FrList_Disciplinas_Alunos: TFrList_Disciplinas_Alunos
         Height = 17
         Size.Values = (
           44.979166666666670000
-          597.958333333333400000
+          597.958333333333300000
           31.750000000000000000
           523.875000000000000000)
         XLColumn = 0
@@ -116,7 +116,7 @@ object FrList_Disciplinas_Alunos: TFrList_Disciplinas_Alunos
     end
     object QRGroup1: TQRGroup
       Left = 38
-      Top = 78
+      Top = 73
       Width = 718
       Height = 46
       AlignToBottom = False
@@ -190,7 +190,7 @@ object FrList_Disciplinas_Alunos: TFrList_Disciplinas_Alunos
           44.979166666666670000
           21.166666666666670000
           71.437500000000000000
-          89.958333333333340000)
+          89.958333333333330000)
         XLColumn = 0
         XLNumFormat = nfGeneral
         ActiveInPreview = False
@@ -344,7 +344,7 @@ object FrList_Disciplinas_Alunos: TFrList_Disciplinas_Alunos
           44.979166666666670000
           23.812500000000000000
           0.000000000000000000
-          76.729166666666660000)
+          76.729166666666670000)
         XLColumn = 0
         XLNumFormat = nfGeneral
         ActiveInPreview = False

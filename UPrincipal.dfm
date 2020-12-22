@@ -397,7 +397,6 @@ object FrPrincipal: TFrPrincipal
           7C51B47C51B47C51B47C51B47C51B47C51B47C51B47C51FFFFFF}
         ParentBiDiMode = False
         TabOrder = 4
-        Visible = False
         OnClick = BitBtn7Click
       end
     end

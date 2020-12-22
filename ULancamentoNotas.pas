@@ -41,7 +41,6 @@ type
     DBNavigator2: TDBNavigator;
     FDQry_AlunosRESULTADO: TStringField;
     DBGrid1: TDBGrid;
-    DBEdit1: TDBEdit;
     procedure FDQry_AlunosAfterPost(DataSet: TDataSet);
   private
     { Private declarations }
